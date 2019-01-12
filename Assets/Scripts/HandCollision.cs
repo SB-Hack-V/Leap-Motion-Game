@@ -9,29 +9,41 @@ public class HandCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("HandR"))
+        // Grab the current frame info
+        Frame frame = controller.Frame();
+
+        // Detect hand gesture
+        foreach (Hand hand in frame.Hands)
         {
-            //Debug.Log("Right hand detected");
-            // Grab the current frame data
-            Frame frame = controller.Frame();
-
-            // Detect hand gesture
-            foreach (Hand hand in frame.Hands)
+            if (hand.IsRight)
             {
-                if (!hand.Fingers[0].IsExtended &&
-                    !hand.Fingers[1].IsExtended &&
-                    !hand.Fingers[2].IsExtended &&
-                    !hand.Fingers[3].IsExtended &&
-                    !hand.Fingers[4].IsExtended)
-                    Debug.Log("Right fist detected");
-                else if (hand.Fingers[0].IsExtended &&
-                    hand.Fingers[1].IsExtended &&
-                    hand.Fingers[2].IsExtended &&
-                    hand.Fingers[3].IsExtended &&
-                    hand.Fingers[4].IsExtended)
-                    Debug.Log("Right palm detected");
-
+                //Debug.Log("Right hand detected!");
             }
+            else
+            {
+                //Debug.Log("Right hand detected!");
+            }
+            if (!hand.Fingers[0].IsExtended &&
+                !hand.Fingers[1].IsExtended &&
+                !hand.Fingers[2].IsExtended &&
+                !hand.Fingers[3].IsExtended &&
+                !hand.Fingers[4].IsExtended &&
+                /*hand.PalmNormal.y > -0.5*/)
+            {
+                Debug.Log("x: " + hand.PalmNormal.x + "y: " + hand.PalmNormal.x + "z: " + hand.PalmNormal.z);
+                Debug.Log("Fist detected");
+            }
+                
+            else if (hand.Fingers[0].IsExtended &&
+                hand.Fingers[1].IsExtended &&
+                hand.Fingers[2].IsExtended &&
+                hand.Fingers[3].IsExtended &&
+                hand.Fingers[4].IsExtended &&
+                /*hand.PalmNormal.y > -0.5 && hand.PalmNormal.y < 0.5*/)
+            {
+                Debug.Log("Palm detected");
+            }
+                
         }
     }
 }
